@@ -1,0 +1,79 @@
+@use 'sass:math';
+
+
+html, body, main {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #040404;
+}
+
+
+.cube {
+  position: relative;
+  transform-style: preserve-3d; // 3D化
+  user-select: none;
+  cursor: grab;
+
+  aspect-ratio: 1;
+  width: 50%;
+  height: auto;
+
+  // デフォルト値
+  // JSにて変更
+  transform: rotateX(-30deg) rotateY(45deg);
+
+
+  &-head, &-foot, &-body, &-surface {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+
+  &-head {
+    transform:
+      rotateX(90deg) // ↓これは`translateZ(50%)`という意味
+      rotateY(-90deg) translateX(50%) rotateY(90deg);
+    background-color: #222;
+  }
+
+  &-foot {
+    transform:
+      rotateX(90deg) // ↓これは`translateZ(50%)`という意味
+      rotateY(-90deg) translateX(-50%) rotateY(90deg);
+    background-color: #222;
+  }
+
+
+  &-body {
+    // 3D化（surfaceに`translateZ(...)`を用いて立体化するため必要）
+    transform-style: preserve-3d;
+  }
+
+
+  &-surface {
+    // 黒 => 緑（上 => 下）にグラデーションされる
+    background: linear-gradient(#151515, #00ec00, #151515);
+  }
+
+
+  @for $i from 1 through 4 {
+    &-surface-#{$i} {
+      transform:
+        rotateY(90deg * $i) // ↓これは`translateZ(50%)`という意味
+        rotateY(-90deg) translateX(50%) rotateY(90deg)
+    }
+  }
+}
