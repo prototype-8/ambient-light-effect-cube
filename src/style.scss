@@ -13,7 +13,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   background-color: #040404;
 }
 
@@ -21,6 +21,8 @@ main {
 .cube {
   position: relative;
   transform-style: preserve-3d; // 3D化
+  user-select: none;
+  cursor: grab;
 
   aspect-ratio: 1;
   width: 50%;
@@ -31,7 +33,7 @@ main {
   transform: rotateX(-30deg) rotateY(45deg);
 
 
-  &-head, &-body, &-surface {
+  &-head, &-foot, &-body, &-surface {
     position: absolute;
     top: 0;
     left: 0;
@@ -47,6 +49,13 @@ main {
     background-color: #222;
   }
 
+  &-foot {
+    transform:
+      rotateX(90deg) // ↓これは`translateZ(50%)`という意味
+      rotateY(-90deg) translateX(-50%) rotateY(90deg);
+    background-color: #222;
+  }
+
 
   &-body {
     // 3D化（surfaceに`translateZ(...)`を用いて立体化するため必要）
@@ -56,7 +65,7 @@ main {
 
   &-surface {
     // 黒 => 緑（上 => 下）にグラデーションされる
-    background: linear-gradient(#151515, #00ec00);
+    background: linear-gradient(#151515, #00ec00, #151515);
   }
 
 
